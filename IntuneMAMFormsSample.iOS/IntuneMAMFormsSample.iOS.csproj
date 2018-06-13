@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{74FF3E46-A4F0-4E89-A650-F79765341583}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>IntuneMAMFormsSample.iOS</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>IntuneMAMFormsSamplePlatform</AssemblyName>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName />
+    <SccLocalPath />
+    <SccAuxPath />
+    <SccProvider />
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Need to force a relative Intermediate Output Path as AOT of dlls fails -->
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)</IntermediateOutputPath>
+    <!-- Need to force a relative output path for remote IOS builds because the Xamarin Build Host creates a path based on the OutputPath and if it is absolute then the path on the
+         Mac will have a colon in it from the Windows drive letter which causes issues when copying the output back to the Windows machine. -->
+    <OutputPath>bin\$(Platform)\$(Configuration)</OutputPath>
+    <!-- If sample is shipped in .xam, reference binding in .xam -->
+    <XamPackageBindingPath>..\..\..\lib\ios-unified\</XamPackageBindingPath>
+    <NugetPack Condition="Exists('$(XamPackageBindingPath)')">..\packages</NugetPack>
+    <XamarinFormsVersion Condition="Exists('$(XamPackageBindingPath)')">2.5.0.280555</XamarinFormsVersion>
+    <XamarinFormsTargetVersion Condition="Exists('$(XamPackageBindingPath)')">netstandard1.0</XamarinFormsTargetVersion>
+    <IOSBuildTaskVersion Condition="Exists('$(XamPackageBindingPath)')">0.1.3404.14</IOSBuildTaskVersion>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Build.props))\Build.props" Condition="!Exists('$(XamPackageBindingPath)')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>i386, x86_64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>i386, x86_64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <BuildIpa>True</BuildIpa>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Share.cs" />
+    <None Include="Entitlements.plist">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Info.plist" />
+    <Compile Include="MAMPolicy.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
+    <InterfaceDefinition Include="Resources\LaunchScreen.xib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_152.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_29.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Resources/Images.xcassets/AppIcons.appiconset/Intune_tile_87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+  </ItemGroup>
+  <Choose>
+    <!-- If sample shipped in .xam, reference binding in .xam -->
+    <When Condition="Exists('$(XamPackageBindingPath)')">
+      <ItemGroup>
+        <Reference Include="Microsoft.Intune.MAM.iOS">
+          <HintPath>$(XamPackageBindingPath)Microsoft.Intune.MAM.iOS.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <ProjectReference Include="..\..\..\bindings\iOS\Microsoft.Intune.MAM.iOS.csproj">
+          <Project>{C8867002-AF09-4898-84EB-A62796C51F08}</Project>
+          <Name>Microsoft.Intune.MAM.iOS</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <BundleResource Include="Settings.bundle\MAMDebugSettings.plist">
+      <SubType>Designer</SubType>
+    </BundleResource>
+    <BundleResource Include="Settings.bundle\Root.plist">
+      <SubType>Designer</SubType>
+    </BundleResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\lib\Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\lib\Xamarin.iOS10\Xamarin.Forms.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Platform.iOS, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\lib\Xamarin.iOS10\Xamarin.Forms.Platform.iOS.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.Forms.Xaml, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\lib\Xamarin.iOS10\Xamarin.Forms.Xaml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <Import Project="..\IntuneMAMFormsSample\IntuneMAMFormsSample.projitems" Label="Shared" Condition="Exists('..\IntuneMAMFormsSample\IntuneMAMFormsSample.projitems')" />
+  <!-- Note: Add CBT overrides if sample is building in CBT else use default targets -->
+  <Import Project="$(CustomBuildExtensionsPath)\Xamarin.iOS.Overrides.CSharp.targets" Condition="!Exists('$(XamPackageBindingPath)')" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" Condition="Exists('$(XamPackageBindingPath)')" />
+  <Import Project="$(CustomBuildExtensionsPath)\Xamarin.iOS.Overrides.Common.after.targets" Condition="!Exists('$(XamPackageBindingPath)')" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.Common.after.targets" Condition="Exists('$(XamPackageBindingPath)')" />
+  <Import Project="$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\build\$(XamarinFormsTargetVersion)\Xamarin.Forms.targets" Condition="Exists('$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\build\$(XamarinFormsTargetVersion)\Xamarin.Forms.targets')" />
+  <!--<Import Project="$(NugetPack)\Microsoft.Intune.MAM.iOS.Build.$(IOSBuildTaskVersion)\build\net452+Xamarin.iOS10\Microsoft.Intune.MAM.iOS.Build.targets" />-->
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\build\$(XamarinFormsTargetVersion)\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(NugetPack)\Xamarin.Forms.$(XamarinFormsVersion)\build\$(XamarinFormsTargetVersion)\Xamarin.Forms.targets'))" />
+  </Target>
+</Project>
